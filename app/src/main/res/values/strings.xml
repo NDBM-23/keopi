@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Keopi</string>
+
+    <string-array name="tipo_grano">
+        <item>(Arábica)</item>
+        <item>(Robusta)</item>
+        <item>(Mezcla)</item>
+    </string-array>
+
+    <string-array name="nivel_tostado">
+        <item>(Claro)</item>
+        <item>(Medio)</item>
+        <item>(Oscuro)</item>
+    </string-array>
+
+    <string-array name="intensidad">
+        <item>(Suave)</item>
+        <item>(Medio)</item>
+        <item>(Fuerte)</item>
+    </string-array>
+
+    <string-array name="presentacion">
+        <item>(Grano)</item>
+        <item>(Molido)</item>
+    </string-array>
+
+    <string-array name="peso">
+        <item>(250 gr)</item>
+        <item>(500 gr)</item>
+        <item>(1 kg)</item>
+    </string-array>
+</resources>
