@@ -13,3 +13,34 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# --- Android Studio / IntelliJ ---
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.display/
+
+# --- Gradle ---
+.gradle/
+build/
+captures/
+
+# --- Local / Secrets (¡IMPORTANTE!) ---
+local.properties
+.secrets
+.env
+*.jks
+*.keystore
+
+# --- Archivos del Sistema ---
+.DS_Store
+Thumbs.db
+
+# --- Native Build (Si usas C/C++) ---
+.externalNativeBuild/
+.cxx/
+
+# --- Pruebas y Reportes ---
+asestests/
