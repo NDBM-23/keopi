@@ -1,26 +1,36 @@
 package com.example.keopi
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.keopi.activities.ShowRecycledList
+import com.example.keopi.utils.CoffeeDataClass
+import com.example.keopi.utils.CoffeeStorage
 
 class MainActivity : AppCompatActivity() {
-    val keopiList: MutableList<Keopi> = mutableListOf()
-    lateinit var nombre_marca: EditText
-    lateinit var pais_origen: EditText
-    lateinit var nombre_empresa: EditText
-    lateinit var telefono_contacto: EditText
-    lateinit var tipo_grano: Spinner
-    lateinit var nivel_tostado: Spinner
-    lateinit var intensidad: Spinner
-    lateinit var presentacion: Spinner
-    lateinit var peso: Spinner
-    lateinit var precio: EditText
+    lateinit var brandName: EditText
+    lateinit var originCountry: EditText
+    lateinit var companyName: EditText
+    lateinit var contactPhone: EditText
+
+    lateinit var beanType: Spinner
+    lateinit var roastLevel: Spinner
+    lateinit var intensity: Spinner
+    lateinit var presentation: Spinner
+    lateinit var weight: Spinner
+
+    lateinit var price: EditText
+
+    lateinit var saveButton: Button
+    lateinit var showButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,50 +40,121 @@ class MainActivity : AppCompatActivity() {
         linkViews()
         setSpinners()
 
+        saveButton.setOnClickListener {
+            saveData()
+        }
+
+        showButton.setOnClickListener {
+            showData()
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
         }
     }
 
-    fun linkViews()
-    {
-        nombre_marca = findViewById(R.id.nombre_marca)
-        pais_origen = findViewById(R.id.pais_origen)
-        nombre_empresa = findViewById(R.id.nombre_empresa)
-        telefono_contacto = findViewById(R.id.telefono_contacto)
-        tipo_grano = findViewById(R.id.tipo_grano)
-        nivel_tostado = findViewById(R.id.nivel_tostado)
-        intensidad = findViewById(R.id.intensidad)
-        presentacion = findViewById(R.id.presentacion)
-        peso = findViewById(R.id.peso)
-        precio = findViewById(R.id.precio)
+    fun linkViews() {
+        brandName = findViewById(R.id.brand_name)
+        originCountry = findViewById(R.id.origin_country)
+        companyName = findViewById(R.id.company_name)
+        contactPhone = findViewById(R.id.contact_phone)
+
+        beanType = findViewById(R.id.bean_type)
+        roastLevel = findViewById(R.id.roast_level)
+        intensity = findViewById(R.id.intensity)
+        presentation = findViewById(R.id.presentation)
+        weight = findViewById(R.id.weight)
+
+        price = findViewById(R.id.price)
+
+        saveButton = findViewById(R.id.save_button)
+        showButton = findViewById(R.id.show_button)
     }
 
-    fun setSpinners(){
-        val tipo_grano_list = resources.getStringArray(R.array.tipo_grano)
-        val nivel_tostado_list = resources.getStringArray(R.array.nivel_tostado)
-        val intensidad_list = resources.getStringArray(R.array.intensidad)
-        val presentacion_list = resources.getStringArray(R.array.presentacion)
-        val peso_list = resources.getStringArray(R.array.peso)
+    fun setSpinners() {
+        val beanTypeList = resources.getStringArray(R.array.bean_type)
+        val roastLevelList = resources.getStringArray(R.array.roast_level)
+        val intensityList = resources.getStringArray(R.array.intensity)
+        val presentationList = resources.getStringArray(R.array.presentation)
+        val weightList = resources.getStringArray(R.array.weight)
 
-        val adapterTipo = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipo_grano_list)
-        val adapterTostado = ArrayAdapter(this, android.R.layout.simple_spinner_item, nivel_tostado_list)
-        val adapterIntensidad = ArrayAdapter(this, android.R.layout.simple_spinner_item, intensidad_list)
-        val adapterPresentacion = ArrayAdapter(this, android.R.layout.simple_spinner_item, presentacion_list)
-        val adapterPeso = ArrayAdapter(this, android.R.layout.simple_spinner_item, peso_list)
+        val beanAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            beanTypeList
+        )
 
-        adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adapterTostado.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adapterIntensidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adapterPresentacion.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adapterPeso.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val roastAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            roastLevelList
+        )
 
-        tipo_grano.adapter = adapterTipo
-        nivel_tostado.adapter = adapterTostado
-        intensidad.adapter = adapterIntensidad
-        presentacion.adapter = adapterPresentacion
-        peso.adapter = adapterPeso
+        val intensityAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            intensityList
+        )
+
+        val presentationAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            presentationList
+        )
+
+        val weightAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            weightList
+        )
+
+        beanAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        roastAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        intensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        presentationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        weightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        beanType.adapter = beanAdapter
+        roastLevel.adapter = roastAdapter
+        intensity.adapter = intensityAdapter
+        presentation.adapter = presentationAdapter
+        weight.adapter = weightAdapter
+    }
+
+    fun saveData() {
+        validate()
+        val data = CoffeeDataClass(
+            brandName.text.toString(),
+            originCountry.text.toString(),
+            companyName.text.toString(),
+            contactPhone.text.toString(),
+            beanType.selectedItem.toString(),
+            roastLevel.selectedItem.toString(),
+            intensity.selectedItem.toString(),
+            presentation.selectedItem.toString(),
+            weight.selectedItem.toString(),
+            price.text.toString().toDoubleOrNull()?: 0.0
+        )
+
+        CoffeeStorage.coffeeList.add(data)
+
+        Toast.makeText(this, "Enviado...", Toast.LENGTH_SHORT).show()
+    }
+
+    fun validate()
+    {
+
+    }
+
+    fun showData() {
+        val nextView = Intent(this, ShowRecycledList::class.java)
+        startActivity(nextView)
     }
 }

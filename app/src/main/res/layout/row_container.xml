@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_container"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:id="@+id/brand_name"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="100dp"
+        android:text="Marca"
+        />
+    <TextView
+        android:id="@+id/company_name"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="100dp"
+    android:text="Empresa"
+        />
+</LinearLayout>

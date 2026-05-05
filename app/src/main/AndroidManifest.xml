@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Keopi">
         <activity
+            android:name=".Card"
+            android:exported="false" />
+        <activity
+            android:name=".CardView"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ShowRecycledList"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
