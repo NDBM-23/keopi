@@ -1,5 +1,6 @@
 package com.example.keopi
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,14 @@ RecyclerView.Adapter<CoffeeAdapter.ViewHolderClass>(){
         val item = list[position]
         holder.brand_name.text=item.brandName
         holder.company_name.text=item.companyName
+
+        holder.brand_name.setOnClickListener {
+            val context = holder.itemView.context
+            val target = Intent(context, Card::class.java)
+
+            target.putExtra("index", position)
+            context.startActivity(target)
+        }
     }
 
     override fun getItemCount(): Int {
