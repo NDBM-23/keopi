@@ -2,21 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/row_container"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="50dp"
     android:orientation="horizontal"
+    android:background="@color/vanilla"
     >
     <TextView
         android:id="@+id/brand_name"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:text="Marca"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/kugile"
         />
     <TextView
         android:id="@+id/company_name"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="100dp"
-    android:text="Empresa"
+        android:layout_height="50dp"
+        android:text="Empresa"
+        android:textSize="25sp"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/kugile"
         />
 </LinearLayout>
