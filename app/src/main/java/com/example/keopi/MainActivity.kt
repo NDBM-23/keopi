@@ -2,6 +2,8 @@ package com.example.keopi
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -9,9 +11,11 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.keopi.activities.ShowRecycledList
+import com.example.keopi.activities.UpdateCard
 import com.example.keopi.utils.CoffeeDataClass
 import com.example.keopi.utils.CoffeeStorage
 
@@ -36,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         linkViews()
         setSpinners()
@@ -140,21 +147,98 @@ class MainActivity : AppCompatActivity() {
             intensity.selectedItem.toString(),
             presentation.selectedItem.toString(),
             weight.selectedItem.toString(),
-            price.text.toString().toDoubleOrNull()?: 0.0
+            price.text.toString().toDoubleOrNull() ?: 0.0
         )
 
         CoffeeStorage.coffeeList.add(data)
 
-        Toast.makeText(this, "Enviado...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Guardado...", Toast.LENGTH_SHORT).show()
     }
 
-    fun validate()
-    {
+    fun validate() {
+        //Templates
+        CoffeeStorage.coffeeList.addAll(
+
+            listOf(
+
+                CoffeeDataClass(
+                    "Lavazza",
+                    "Italia",
+                    "Lavazza Group",
+                    "3312345678",
+                    "Arábica",
+                    "Medio",
+                    "Alta",
+                    "Molido",
+                    "500 g",
+                    189.90
+                ),
+
+                CoffeeDataClass(
+                    "Juan Valdez",
+                    "Colombia",
+                    "Procafecol",
+                    "3323456789",
+                    "Arábica",
+                    "Oscuro",
+                    "Media",
+                    "Grano",
+                    "1 kg",
+                    245.50
+                ),
+
+                CoffeeDataClass(
+                    "Café de Olla",
+                    "México",
+                    "Café Tradicional MX",
+                    "3334567890",
+                    "Mezcla",
+                    "Medio",
+                    "Suave",
+                    "Molido",
+                    "250 g",
+                    95.00
+                ),
+
+                CoffeeDataClass(
+                    "Starbucks Pike Place",
+                    "Estados Unidos",
+                    "Starbucks Coffee Company",
+                    "3345678901",
+                    "Arábica",
+                    "Medio",
+                    "Alta",
+                    "Cápsulas",
+                    "12 pzas",
+                    210.75
+                )
+
+            )
+
+        )
 
     }
 
     fun showData() {
         val nextView = Intent(this, ShowRecycledList::class.java)
         startActivity(nextView)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.register) {
+            Toast.makeText(this, "Ya se encuentra en Registro", Toast.LENGTH_LONG).show()
+        } else if (item.itemId == R.id.seeRegisters) {
+            startActivity(Intent(this, ShowRecycledList::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.updateRegisters) {
+            startActivity(Intent(this, UpdateCard::class.java))
+            this.finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

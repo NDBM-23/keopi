@@ -1,5 +1,6 @@
-package com.example.keopi
+package com.example.keopi.activities
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -8,15 +9,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.keopi.R
 import com.example.keopi.utils.CoffeeDataClass
 import com.example.keopi.utils.CoffeeStorage
-import java.util.jar.Manifest
 
-class Card : AppCompatActivity() {
+class SeeCard : AppCompatActivity() {
     lateinit var item: CoffeeDataClass
     private val REQUEST_CALL = 1
     lateinit var brandName: TextView
@@ -33,17 +35,18 @@ class Card : AppCompatActivity() {
     lateinit var price: TextView
 
     lateinit var button: Button
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_tarjeta)
+        setContentView(R.layout.activity_see_card)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         linkViews()
 
-        val pos: Int
-
-        pos = intent.getIntExtra("index", -1)
+        val pos: Int = intent.getIntExtra("index", -1)
 
         val i = CoffeeStorage.coffeeList[pos]
         item = i
@@ -89,8 +92,8 @@ class Card : AppCompatActivity() {
     }
 
     fun call(){
-        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CALL_PHONE), REQUEST_CALL)
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL)
         }
         else {
             val intent = Intent(Intent.ACTION_CALL)

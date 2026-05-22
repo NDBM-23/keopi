@@ -1,4 +1,4 @@
-package com.example.keopi
+package com.example.keopi.adapters
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.keopi.R
+import com.example.keopi.activities.SeeCard
 import com.example.keopi.utils.CoffeeDataClass
 
 class CoffeeAdapter(private val list: List<CoffeeDataClass>):
@@ -28,7 +30,7 @@ RecyclerView.Adapter<CoffeeAdapter.ViewHolderClass>(){
 
         holder.brand_name.setOnClickListener {
             val context = holder.itemView.context
-            val target = Intent(context, Card::class.java)
+            val target = Intent(context, SeeCard::class.java)
 
             target.putExtra("index", position)
             context.startActivity(target)
