@@ -3,29 +3,34 @@
     <string name="app_name"></string>
 
     <string-array name="bean_type">
+        <item>Elija...</item>
         <item>Arábica</item>
         <item>Robusta</item>
         <item>Mezcla</item>
     </string-array>
 
     <string-array name="roast_level">
+        <item>Elija...</item>
         <item>Claro</item>
         <item>Medio</item>
         <item>Oscuro</item>
     </string-array>
 
     <string-array name="intensity">
+        <item>Elija...</item>
         <item>Suave</item>
         <item>Medio</item>
         <item>Fuerte</item>
     </string-array>
 
     <string-array name="presentation">
+        <item>Elija...</item>
         <item>Grano</item>
         <item>Molido</item>
     </string-array>
 
     <string-array name="weight">
+        <item>Elija...</item>
         <item>250 gr</item>
         <item>500 gr</item>
         <item>1 kg</item>

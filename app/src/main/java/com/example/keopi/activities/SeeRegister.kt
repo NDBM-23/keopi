@@ -18,7 +18,7 @@ import com.example.keopi.R
 import com.example.keopi.utils.CoffeeDataClass
 import com.example.keopi.utils.CoffeeStorage
 
-class SeeCard : AppCompatActivity() {
+class SeeRegister : AppCompatActivity() {
     lateinit var item: CoffeeDataClass
     private val REQUEST_CALL = 1
     lateinit var brandName: TextView

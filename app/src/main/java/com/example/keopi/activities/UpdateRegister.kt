@@ -19,7 +19,7 @@ import com.example.keopi.R
 import com.example.keopi.utils.CoffeeDataClass
 import com.example.keopi.utils.CoffeeStorage
 
-class UpdateCard : AppCompatActivity() {
+class UpdateRegister : AppCompatActivity() {
 
     lateinit var edtBrandName: EditText
     lateinit var edtPrice: EditText
@@ -145,12 +145,13 @@ class UpdateCard : AppCompatActivity() {
 
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.update_spinner_row,
+            R.id.text,
             resources.getStringArray(array)
         )
 
         adapter.setDropDownViewResource(
-            android.R.layout.simple_spinner_dropdown_item
+            R.layout.update_spinner_row
         )
 
         spinner.adapter = adapter
@@ -203,10 +204,14 @@ class UpdateCard : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             this.finish()
         } else if (item.itemId == R.id.seeRegisters) {
-            startActivity(Intent(this, ShowRecycledList::class.java))
+            startActivity(Intent(this, RegistersList::class.java))
             this.finish()
         } else if (item.itemId == R.id.updateRegisters) {
             Toast.makeText(this, "Ya se encuentra en Actualizar", Toast.LENGTH_LONG).show()
+        }
+        else if (item.itemId == R.id.deleteRegisters) {
+            startActivity(Intent(this, DeleteRegister::class.java))
+            this.finish()
         }
         return super.onOptionsItemSelected(item)
     }

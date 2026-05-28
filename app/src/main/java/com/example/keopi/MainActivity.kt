@@ -14,8 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.keopi.activities.ShowRecycledList
-import com.example.keopi.activities.UpdateCard
+import com.example.keopi.activities.DeleteRegister
+import com.example.keopi.activities.RegistersList
+import com.example.keopi.activities.UpdateRegister
 import com.example.keopi.utils.CoffeeDataClass
 import com.example.keopi.utils.CoffeeStorage
 
@@ -46,7 +47,65 @@ class MainActivity : AppCompatActivity() {
 
         linkViews()
         setSpinners()
+        CoffeeStorage.coffeeList.addAll(
 
+            listOf(
+
+                CoffeeDataClass(
+                    "Lavazza",
+                    "Italia",
+                    "Lavazza Group",
+                    "3312345678",
+                    "Arábica",
+                    "Medio",
+                    "Fuerte",
+                    "Molido",
+                    "500 g",
+                    189.90
+                ),
+
+                CoffeeDataClass(
+                    "Juan Valdez",
+                    "Colombia",
+                    "Procafecol",
+                    "3323456789",
+                    "Arábica",
+                    "Oscuro",
+                    "Medio",
+                    "Grano",
+                    "1 kg",
+                    245.50
+                ),
+
+                CoffeeDataClass(
+                    "Café de Olla",
+                    "México",
+                    "Café Tradicional MX",
+                    "3334567890",
+                    "Mezcla",
+                    "Medio",
+                    "Suave",
+                    "Molido",
+                    "250 g",
+                    95.00
+                ),
+
+                CoffeeDataClass(
+                    "Starbucks Pike Place",
+                    "Estados Unidos",
+                    "Starbucks Coffee Company",
+                    "3345678901",
+                    "Arábica",
+                    "Medio",
+                    "Fuerte",
+                    "Cápsulas",
+                    "12 pzas",
+                    210.75
+                )
+
+            )
+
+        )
         saveButton.setOnClickListener {
             saveData()
         }
@@ -92,41 +151,20 @@ class MainActivity : AppCompatActivity() {
         val presentationList = resources.getStringArray(R.array.presentation)
         val weightList = resources.getStringArray(R.array.weight)
 
-        val beanAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            beanTypeList
-        )
+        val layoutId = R.layout.register_spinner_row
+        val textViewId = R.id.text
 
-        val roastAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            roastLevelList
-        )
+        val beanAdapter = ArrayAdapter(this, layoutId, textViewId, beanTypeList)
+        val roastAdapter = ArrayAdapter(this, layoutId, textViewId, roastLevelList)
+        val intensityAdapter = ArrayAdapter(this, layoutId, textViewId, intensityList)
+        val presentationAdapter = ArrayAdapter(this, layoutId, textViewId, presentationList)
+        val weightAdapter = ArrayAdapter(this, layoutId, textViewId, weightList)
 
-        val intensityAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            intensityList
-        )
-
-        val presentationAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            presentationList
-        )
-
-        val weightAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            weightList
-        )
-
-        beanAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        roastAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        intensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        presentationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        weightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        beanAdapter.setDropDownViewResource(layoutId)
+        roastAdapter.setDropDownViewResource(layoutId)
+        intensityAdapter.setDropDownViewResource(layoutId)
+        presentationAdapter.setDropDownViewResource(layoutId)
+        weightAdapter.setDropDownViewResource(layoutId)
 
         beanType.adapter = beanAdapter
         roastLevel.adapter = roastAdapter
@@ -136,7 +174,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun saveData() {
-        validate()
+        if (!validate()) {
+            return
+        }
         val data = CoffeeDataClass(
             brandName.text.toString(),
             originCountry.text.toString(),
@@ -155,72 +195,68 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Guardado...", Toast.LENGTH_SHORT).show()
     }
 
-    fun validate() {
-        //Templates
-        CoffeeStorage.coffeeList.addAll(
+    fun validate(): Boolean {
+        if (brandName.text.isNullOrBlank()) {
+            Toast.makeText(this, "Ingrese la marca", Toast.LENGTH_SHORT).show()
+            brandName.requestFocus()
+            return false
+        }
 
-            listOf(
+        if (originCountry.text.isNullOrBlank()) {
+            Toast.makeText(this, "Ingrese el país", Toast.LENGTH_SHORT).show()
+            originCountry.requestFocus()
+            return false
+        }
 
-                CoffeeDataClass(
-                    "Lavazza",
-                    "Italia",
-                    "Lavazza Group",
-                    "3312345678",
-                    "Arábica",
-                    "Medio",
-                    "Alta",
-                    "Molido",
-                    "500 g",
-                    189.90
-                ),
+        if (companyName.text.isNullOrBlank()) {
+            Toast.makeText(this, "Ingrese la empresa", Toast.LENGTH_SHORT).show()
+            companyName.requestFocus()
+            return false
+        }
 
-                CoffeeDataClass(
-                    "Juan Valdez",
-                    "Colombia",
-                    "Procafecol",
-                    "3323456789",
-                    "Arábica",
-                    "Oscuro",
-                    "Media",
-                    "Grano",
-                    "1 kg",
-                    245.50
-                ),
+        if (contactPhone.text.isNullOrBlank()) {
+            Toast.makeText(this, "Ingrese el teléfono", Toast.LENGTH_SHORT).show()
+            contactPhone.requestFocus()
+            return false
+        }
 
-                CoffeeDataClass(
-                    "Café de Olla",
-                    "México",
-                    "Café Tradicional MX",
-                    "3334567890",
-                    "Mezcla",
-                    "Medio",
-                    "Suave",
-                    "Molido",
-                    "250 g",
-                    95.00
-                ),
+        if (price.text.isNullOrBlank()) {
+            Toast.makeText(this, "Ingrese el precio", Toast.LENGTH_SHORT).show()
+            price.requestFocus()
+            return false
+        }
 
-                CoffeeDataClass(
-                    "Starbucks Pike Place",
-                    "Estados Unidos",
-                    "Starbucks Coffee Company",
-                    "3345678901",
-                    "Arábica",
-                    "Medio",
-                    "Alta",
-                    "Cápsulas",
-                    "12 pzas",
-                    210.75
-                )
+        if (beanType.selectedItemPosition == 0) {
+            Toast.makeText(this, "Selecciona un tipo de grano", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
-            )
+        if (roastLevel.selectedItemPosition == 0) {
+            Toast.makeText(this, "Selecciona el nivel de tueste", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
-        )
+        if (intensity.selectedItemPosition == 0) {
+            Toast.makeText(this, "Selecciona la intensidad", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
+        if (presentation.selectedItemPosition == 0) {
+            Toast.makeText(this, "Selecciona la presentación", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (weight.selectedItemPosition == 0) {
+            Toast.makeText(this, "Selecciona el peso", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        // Si llegó hasta aquí, todo está bien
+        return true
     }
 
     fun showData() {
-        val nextView = Intent(this, ShowRecycledList::class.java)
+        val nextView = Intent(this, RegistersList::class.java)
         startActivity(nextView)
     }
 
@@ -233,10 +269,13 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId == R.id.register) {
             Toast.makeText(this, "Ya se encuentra en Registro", Toast.LENGTH_LONG).show()
         } else if (item.itemId == R.id.seeRegisters) {
-            startActivity(Intent(this, ShowRecycledList::class.java))
+            startActivity(Intent(this, RegistersList::class.java))
             this.finish()
         } else if (item.itemId == R.id.updateRegisters) {
-            startActivity(Intent(this, UpdateCard::class.java))
+            startActivity(Intent(this, UpdateRegister::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.deleteRegisters) {
+            startActivity(Intent(this, DeleteRegister::class.java))
             this.finish()
         }
         return super.onOptionsItemSelected(item)

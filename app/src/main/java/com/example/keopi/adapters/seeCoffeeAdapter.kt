@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.keopi.R
-import com.example.keopi.activities.SeeCard
+import com.example.keopi.activities.SeeRegister
 import com.example.keopi.utils.CoffeeDataClass
 
-class CoffeeAdapter(private val list: List<CoffeeDataClass>):
-RecyclerView.Adapter<CoffeeAdapter.ViewHolderClass>(){
+class seeCoffeeAdapter(private val list: List<CoffeeDataClass>):
+RecyclerView.Adapter<seeCoffeeAdapter.ViewHolderClass>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolderClass {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_container, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.see_row_container, parent, false)
         return ViewHolderClass(view)
     }
 
@@ -30,7 +30,7 @@ RecyclerView.Adapter<CoffeeAdapter.ViewHolderClass>(){
 
         holder.brand_name.setOnClickListener {
             val context = holder.itemView.context
-            val target = Intent(context, SeeCard::class.java)
+            val target = Intent(context, SeeRegister::class.java)
 
             target.putExtra("index", position)
             context.startActivity(target)

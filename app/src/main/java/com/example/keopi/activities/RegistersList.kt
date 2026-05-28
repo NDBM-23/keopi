@@ -13,11 +13,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.keopi.adapters.CoffeeAdapter
+import com.example.keopi.adapters.seeCoffeeAdapter
 import com.example.keopi.MainActivity
 import com.example.keopi.R
 
-class ShowRecycledList : AppCompatActivity() {
+class RegistersList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,10 +26,10 @@ class ShowRecycledList : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val recycler_view = findViewById<RecyclerView>(R.id.recicler_view)
+        val recycler_view = findViewById<RecyclerView>(R.id.see_recicler_list)
         recycler_view.layoutManager = LinearLayoutManager(this)
 
-        val adapter = CoffeeAdapter(CoffeeStorage.coffeeList)
+        val adapter = seeCoffeeAdapter(CoffeeStorage.coffeeList)
         recycler_view.adapter = adapter
 
         adapter.notifyDataSetChanged()
@@ -57,7 +57,11 @@ class ShowRecycledList : AppCompatActivity() {
         }
         else if (item.itemId == R.id.updateRegisters)
         {
-            startActivity(Intent(this, UpdateCard::class.java))
+            startActivity(Intent(this, UpdateRegister::class.java))
+            this.finish()
+        }
+        else if (item.itemId == R.id.deleteRegisters) {
+            startActivity(Intent(this, DeleteRegister::class.java))
             this.finish()
         }
         return super.onOptionsItemSelected(item)
