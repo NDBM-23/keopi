@@ -3,21 +3,21 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/vanilla">
+    android:background="@color/vanilla"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="18dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="18dp"
+        android:fontFamily="@font/kugile"
         android:text="Nombre de la Marca:"
-        android:textSize="18sp"
         android:textColor="@color/blue"
-        android:fontFamily="@font/kugile"/>
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/brand_name"
@@ -25,244 +25,245 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
-        android:hint="Marca"
         android:background="@null"
-        android:textSize="18sp"
+        android:fontFamily="@font/times_new_roman"
+        android:hint="Marca"
         android:textColor="@color/blue"
         android:textColorHint="@color/blueT"
-        android:fontFamily="@font/times_new_roman"/>
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="18dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Empresa:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Origen:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Contacto:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
+        android:layout_marginEnd="18dp"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/company_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Nombre"
             android:background="@null"
+            android:fontFamily="@font/times_new_roman"
+            android:hint="Nombre"
             android:textColor="@color/blue"
-            android:textColorHint="@color/blueT"
-            android:fontFamily="@font/times_new_roman"/>
+            android:textColorHint="@color/blueT" />
 
         <EditText
             android:id="@+id/origin_country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="País"
             android:background="@null"
+            android:fontFamily="@font/times_new_roman"
+            android:hint="País"
             android:textColor="@color/blue"
-            android:textColorHint="@color/blueT"
-            android:fontFamily="@font/times_new_roman"/>
+            android:textColorHint="@color/blueT" />
 
         <EditText
             android:id="@+id/contact_phone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Teléfono"
             android:background="@null"
+            android:fontFamily="@font/times_new_roman"
+            android:hint="Teléfono"
+            android:inputType="phone"
             android:textColor="@color/blue"
-            android:textColorHint="@color/blueT"
-            android:fontFamily="@font/times_new_roman"/>
+            android:textColorHint="@color/blueT" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="18dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Grano:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Tostado:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Intensidad:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
+        android:layout_marginEnd="18dp"
+        android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/bean_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Spinner
             android:id="@+id/roast_level"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Spinner
             android:id="@+id/intensity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="18dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="170dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/kugile"
             android:text="Presentación:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Peso:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/kugile"
             android:text="Precio:"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:fontFamily="@font/kugile"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
+        android:layout_marginEnd="18dp"
+        android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/presentation"
             android:layout_width="170dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <Spinner
             android:id="@+id/weight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <EditText
             android:id="@+id/price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:hint="$"
             android:inputType="numberDecimal"
-            android:background="@null"
             android:textAlignment="viewEnd"
             android:textColor="@color/blue"
-            android:textColorHint="@color/blueT"/>
+            android:textColorHint="@color/blueT" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
         android:gravity="center"
-        android:layout_marginTop="40dp">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
             android:text="Guardar"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/blue"/>
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="30dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/show_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
             android:text="Mostrar"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/blue"/>
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

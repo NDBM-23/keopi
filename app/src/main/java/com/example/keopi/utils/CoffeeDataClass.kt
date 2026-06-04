@@ -10,6 +10,6 @@ data class CoffeeDataClass(
     val intensity: String,
     val presentation: String,
     val weight: String,
-    val price: Double,
+    val price: String,
     var delete: Boolean = false
 )

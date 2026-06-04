@@ -14,8 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.keopi.activities.Contact
+import com.example.keopi.activities.Creator
 import com.example.keopi.activities.DeleteRegister
 import com.example.keopi.activities.RegistersList
+import com.example.keopi.activities.SignIn
 import com.example.keopi.activities.UpdateRegister
 import com.example.keopi.utils.CoffeeDataClass
 import com.example.keopi.utils.CoffeeStorage
@@ -47,65 +50,6 @@ class MainActivity : AppCompatActivity() {
 
         linkViews()
         setSpinners()
-        CoffeeStorage.coffeeList.addAll(
-
-            listOf(
-
-                CoffeeDataClass(
-                    "Lavazza",
-                    "Italia",
-                    "Lavazza Group",
-                    "3312345678",
-                    "Arábica",
-                    "Medio",
-                    "Fuerte",
-                    "Molido",
-                    "500 g",
-                    189.90
-                ),
-
-                CoffeeDataClass(
-                    "Juan Valdez",
-                    "Colombia",
-                    "Procafecol",
-                    "3323456789",
-                    "Arábica",
-                    "Oscuro",
-                    "Medio",
-                    "Grano",
-                    "1 kg",
-                    245.50
-                ),
-
-                CoffeeDataClass(
-                    "Café de Olla",
-                    "México",
-                    "Café Tradicional MX",
-                    "3334567890",
-                    "Mezcla",
-                    "Medio",
-                    "Suave",
-                    "Molido",
-                    "250 g",
-                    95.00
-                ),
-
-                CoffeeDataClass(
-                    "Starbucks Pike Place",
-                    "Estados Unidos",
-                    "Starbucks Coffee Company",
-                    "3345678901",
-                    "Arábica",
-                    "Medio",
-                    "Fuerte",
-                    "Cápsulas",
-                    "12 pzas",
-                    210.75
-                )
-
-            )
-
-        )
         saveButton.setOnClickListener {
             saveData()
         }
@@ -143,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.save_button)
         showButton = findViewById(R.id.show_button)
     }
-
     fun setSpinners() {
         val beanTypeList = resources.getStringArray(R.array.bean_type)
         val roastLevelList = resources.getStringArray(R.array.roast_level)
@@ -172,7 +115,6 @@ class MainActivity : AppCompatActivity() {
         presentation.adapter = presentationAdapter
         weight.adapter = weightAdapter
     }
-
     fun saveData() {
         if (!validate()) {
             return
@@ -187,87 +129,112 @@ class MainActivity : AppCompatActivity() {
             intensity.selectedItem.toString(),
             presentation.selectedItem.toString(),
             weight.selectedItem.toString(),
-            price.text.toString().toDoubleOrNull() ?: 0.0
+            price.text.toString()
         )
 
         CoffeeStorage.coffeeList.add(data)
 
         Toast.makeText(this, "Guardado...", Toast.LENGTH_SHORT).show()
     }
-
     fun validate(): Boolean {
-        if (brandName.text.isNullOrBlank()) {
+
+        if (brandName.text.toString().trim().isEmpty()) {
             Toast.makeText(this, "Ingrese la marca", Toast.LENGTH_SHORT).show()
             brandName.requestFocus()
             return false
         }
 
-        if (originCountry.text.isNullOrBlank()) {
-            Toast.makeText(this, "Ingrese el país", Toast.LENGTH_SHORT).show()
-            originCountry.requestFocus()
-            return false
-        }
-
-        if (companyName.text.isNullOrBlank()) {
+        if (companyName.text.toString().trim().isEmpty()) {
             Toast.makeText(this, "Ingrese la empresa", Toast.LENGTH_SHORT).show()
             companyName.requestFocus()
             return false
         }
 
-        if (contactPhone.text.isNullOrBlank()) {
+        if (originCountry.text.toString().trim().isEmpty()) {
+            Toast.makeText(this, "Ingrese el país de origen", Toast.LENGTH_SHORT).show()
+            originCountry.requestFocus()
+            return false
+        }
+
+        val phone = contactPhone.text.toString().trim()
+
+        if (phone.isEmpty()) {
             Toast.makeText(this, "Ingrese el teléfono", Toast.LENGTH_SHORT).show()
             contactPhone.requestFocus()
             return false
         }
 
-        if (price.text.isNullOrBlank()) {
-            Toast.makeText(this, "Ingrese el precio", Toast.LENGTH_SHORT).show()
-            price.requestFocus()
+        if (phone.length != 10 || !phone.all { it.isDigit()}) {
+            Toast.makeText(this, "Telefono de 10 dígitos", Toast.LENGTH_SHORT).show()
+            contactPhone.requestFocus()
             return false
         }
 
         if (beanType.selectedItemPosition == 0) {
-            Toast.makeText(this, "Selecciona un tipo de grano", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Seleccione un tipo de grano", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (roastLevel.selectedItemPosition == 0) {
-            Toast.makeText(this, "Selecciona el nivel de tueste", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Seleccione el nivel de tostado", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (intensity.selectedItemPosition == 0) {
-            Toast.makeText(this, "Selecciona la intensidad", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Seleccione la intensidad", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (presentation.selectedItemPosition == 0) {
-            Toast.makeText(this, "Selecciona la presentación", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Seleccione la presentación", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (weight.selectedItemPosition == 0) {
-            Toast.makeText(this, "Selecciona el peso", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Seleccione el peso", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        // Si llegó hasta aquí, todo está bien
+        val priceValue = price.text.toString().toDoubleOrNull()
+
+        if (priceValue == null) {
+            Toast.makeText(this, "Ingrese un precio válido", Toast.LENGTH_SHORT).show()
+            price.requestFocus()
+            return false
+        }
+
+        if (priceValue <= 0) {
+            Toast.makeText(this, "El precio debe ser mayor a cero", Toast.LENGTH_SHORT).show()
+            price.requestFocus()
+            return false
+        }
+
         return true
     }
-
     fun showData() {
         val nextView = Intent(this, RegistersList::class.java)
         startActivity(nextView)
+        this.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        val prefe = getSharedPreferences("usuarios", MODE_PRIVATE)
+        val rol = prefe.getString("rol", "")
+
+        if (rol == "Trabajador") {
+            menu?.findItem(R.id.register)?.isVisible = false
+            menu?.findItem(R.id.updateRegisters)?.isVisible = false
+            menu?.findItem(R.id.deleteRegisters)?.isVisible = false
+        }
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.register) {
-            Toast.makeText(this, "Ya se encuentra en Registro", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Ya se encuentra en Registro", Toast.LENGTH_SHORT).show()
         } else if (item.itemId == R.id.seeRegisters) {
             startActivity(Intent(this, RegistersList::class.java))
             this.finish()
@@ -277,6 +244,27 @@ class MainActivity : AppCompatActivity() {
         } else if (item.itemId == R.id.deleteRegisters) {
             startActivity(Intent(this, DeleteRegister::class.java))
             this.finish()
+        } else if (item.itemId == R.id.creator) {
+            startActivity(Intent(this, Creator::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.contact) {
+            startActivity(Intent(this, Contact::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.sign_out) {
+            val prefe = getSharedPreferences("usuarios", MODE_PRIVATE)
+
+            prefe.edit().apply {
+                putBoolean("sesion", false)
+                remove("rol")
+                apply()
+            }
+
+            val intent = Intent(this, SignIn::class.java)
+
+            startActivity(intent)
+            finish()
+
+            return true
         }
         return super.onOptionsItemSelected(item)
     }

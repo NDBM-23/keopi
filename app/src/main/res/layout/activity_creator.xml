@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/creator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/vanilla">
+
+    <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="18dp"
+        android:text="Creador:"
+        android:textSize="24sp"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/kugile"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:hint="Nestor Daniel Becerra Merino"
+        android:background="@null"
+        android:textColor="@color/blue"
+        android:textColorHint="@color/blueT"
+        android:textSize="22sp"
+        android:fontFamily="@font/times_new_roman"/>
+
+    <ImageView
+        android:id="@+id/creator_photo"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:contentDescription="Foto del creador"
+        android:scaleType="centerCrop"
+        android:src="@drawable/creador" />
+
+</LinearLayout>

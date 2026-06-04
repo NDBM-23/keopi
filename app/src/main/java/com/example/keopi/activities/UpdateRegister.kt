@@ -39,9 +39,16 @@ class UpdateRegister : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (CoffeeStorage.coffeeList.isEmpty()) {
+            Toast.makeText(this, "No hay nada registrado", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_update_card)
-
         var pos: Int = 0
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -60,6 +67,8 @@ class UpdateRegister : AppCompatActivity() {
             setHints(CoffeeStorage.coffeeList[pos])
         }
         save.setOnClickListener {
+            if (!validate()) return@setOnClickListener
+
             val data = CoffeeDataClass(
                 edtBrandName.text.toString(),
                 edtOriginCountry.text.toString(),
@@ -70,7 +79,7 @@ class UpdateRegister : AppCompatActivity() {
                 spnIntensity.selectedItem.toString(),
                 spnPresentation.selectedItem.toString(),
                 spnWeight.selectedItem.toString(),
-                edtPrice.text.toString().toDoubleOrNull()?: 0.0
+                edtPrice.text.toString()
             )
 
             CoffeeStorage.coffeeList[pos] = data
@@ -172,7 +181,7 @@ class UpdateRegister : AppCompatActivity() {
 
     fun setHints(item: CoffeeDataClass) {
         edtBrandName.setText(item.brandName)
-        edtPrice.setText(item.price.toString())
+        edtPrice.setText(item.price)
         edtCompanyName.setText(item.companyName)
         edtOriginCountry.setText(item.originCountry)
         edtContactPhone.setText(item.contactPhone)
@@ -194,9 +203,95 @@ class UpdateRegister : AppCompatActivity() {
         )
     }
 
+    fun validate(): Boolean {
+
+        if (edtBrandName.text.toString().trim().isEmpty()) {
+            Toast.makeText(this, "Ingrese la marca", Toast.LENGTH_SHORT).show()
+            edtBrandName.requestFocus()
+            return false
+        }
+
+        if (edtCompanyName.text.toString().trim().isEmpty()) {
+            Toast.makeText(this, "Ingrese la empresa", Toast.LENGTH_SHORT).show()
+            edtCompanyName.requestFocus()
+            return false
+        }
+
+        if (edtOriginCountry.text.toString().trim().isEmpty()) {
+            Toast.makeText(this, "Ingrese el país de origen", Toast.LENGTH_SHORT).show()
+            edtOriginCountry.requestFocus()
+            return false
+        }
+
+        val phone = edtContactPhone.text.toString().trim()
+
+        if (phone.isEmpty()) {
+            Toast.makeText(this, "Ingrese el teléfono", Toast.LENGTH_SHORT).show()
+            edtContactPhone.requestFocus()
+            return false
+        }
+
+        if (phone.length != 10 || !phone.all { it.isDigit() }) {
+            Toast.makeText(this, "Teléfono de 10 dígitos", Toast.LENGTH_SHORT).show()
+            edtContactPhone.requestFocus()
+            return false
+        }
+
+        if (spnBeanType.selectedItemPosition == 0) {
+            Toast.makeText(this, "Seleccione un tipo de grano", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (spnRoastLevel.selectedItemPosition == 0) {
+            Toast.makeText(this, "Seleccione el nivel de tostado", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (spnIntensity.selectedItemPosition == 0) {
+            Toast.makeText(this, "Seleccione la intensidad", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (spnPresentation.selectedItemPosition == 0) {
+            Toast.makeText(this, "Seleccione la presentación", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (spnWeight.selectedItemPosition == 0) {
+            Toast.makeText(this, "Seleccione el peso", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        val priceValue = edtPrice.text.toString().toDoubleOrNull()
+
+        if (priceValue == null) {
+            Toast.makeText(this, "Ingrese un precio válido", Toast.LENGTH_SHORT).show()
+            edtPrice.requestFocus()
+            return false
+        }
+
+        if (priceValue <= 0) {
+            Toast.makeText(this, "El precio debe ser mayor a cero", Toast.LENGTH_SHORT).show()
+            edtPrice.requestFocus()
+            return false
+        }
+
+        return true
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        val prefe = getSharedPreferences("usuarios", MODE_PRIVATE)
+        val rol = prefe.getString("rol", "")
+
+        if (rol == "Trabajador") {
+            menu?.findItem(R.id.register)?.isVisible = false
+            menu?.findItem(R.id.updateRegisters)?.isVisible = false
+            menu?.findItem(R.id.deleteRegisters)?.isVisible = false
+        }
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -207,12 +302,33 @@ class UpdateRegister : AppCompatActivity() {
             startActivity(Intent(this, RegistersList::class.java))
             this.finish()
         } else if (item.itemId == R.id.updateRegisters) {
-            Toast.makeText(this, "Ya se encuentra en Actualizar", Toast.LENGTH_LONG).show()
-        }
-        else if (item.itemId == R.id.deleteRegisters) {
+            Toast.makeText(this, "Ya se encuentra en Actualizar", Toast.LENGTH_SHORT).show()
+        } else if (item.itemId == R.id.deleteRegisters) {
             startActivity(Intent(this, DeleteRegister::class.java))
             this.finish()
+        } else if (item.itemId == R.id.creator) {
+            startActivity(Intent(this, Creator::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.contact) {
+            startActivity(Intent(this, Contact::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.sign_out) {
+            val prefe = getSharedPreferences("usuarios", MODE_PRIVATE)
+
+            prefe.edit().apply {
+                putBoolean("sesion", false)
+                remove("rol")
+                apply()
+            }
+
+            val intent = Intent(this, SignIn::class.java)
+
+            startActivity(intent)
+            finish()
+
+            return true
         }
+
         return super.onOptionsItemSelected(item)
     }
 }

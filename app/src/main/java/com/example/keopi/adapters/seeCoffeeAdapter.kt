@@ -1,5 +1,6 @@
 package com.example.keopi.adapters
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +34,9 @@ RecyclerView.Adapter<seeCoffeeAdapter.ViewHolderClass>(){
             val target = Intent(context, SeeRegister::class.java)
 
             target.putExtra("index", position)
+
             context.startActivity(target)
+            (context as Activity).finish()
         }
     }
 

@@ -26,6 +26,11 @@ class DeleteRegister : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (CoffeeStorage.coffeeList.isEmpty()) {
+            Toast.makeText(this, "No hay nada registrado", Toast.LENGTH_SHORT).show()
+        }
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_delete_register)
 
@@ -71,7 +76,17 @@ class DeleteRegister : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        val prefe = getSharedPreferences("usuarios", MODE_PRIVATE)
+        val rol = prefe.getString("rol", "")
+
+        if (rol == "Trabajador") {
+            menu?.findItem(R.id.register)?.isVisible = false
+            menu?.findItem(R.id.updateRegisters)?.isVisible = false
+            menu?.findItem(R.id.deleteRegisters)?.isVisible = false
+        }
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -86,7 +101,28 @@ class DeleteRegister : AppCompatActivity() {
             this.finish()
         } else if (item.itemId == R.id.deleteRegisters) {
 
-            Toast.makeText(this, "Ya se encuentra en Borrar", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Ya se encuentra en Borrar", Toast.LENGTH_SHORT).show()
+        } else if (item.itemId == R.id.creator) {
+            startActivity(Intent(this, Creator::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.contact) {
+            startActivity(Intent(this, Contact::class.java))
+            this.finish()
+        } else if (item.itemId == R.id.sign_out) {
+            val prefe = getSharedPreferences("usuarios", MODE_PRIVATE)
+
+            prefe.edit().apply {
+                putBoolean("sesion", false)
+                remove("rol")
+                apply()
+            }
+
+            val intent = Intent(this, SignIn::class.java)
+
+            startActivity(intent)
+            finish()
+
+            return true
         }
         return super.onOptionsItemSelected(item)
     }

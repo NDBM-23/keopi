@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/register"
         android:title="Inicio"
@@ -15,5 +16,22 @@
     <item
         android:id="@+id/deleteRegisters"
         android:title="Borrar Registros"
+        app:showAsAction="always"
+        android:icon="@drawable/trashcan"
+        />
+    <item
+        android:id="@+id/creator"
+        android:title="Creador"
+        />
+    <item
+        android:id="@+id/contact"
+        android:title="Contacto"
+
+        />
+    <item
+        android:id="@+id/sign_out"
+        android:title="Cerrar Sesión"
+        app:showAsAction="always"
+        android:icon="@drawable/sign_out"
         />
 </menu>

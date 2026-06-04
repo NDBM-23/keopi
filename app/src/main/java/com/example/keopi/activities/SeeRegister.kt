@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.keopi.MainActivity
 import com.example.keopi.R
 import com.example.keopi.utils.CoffeeDataClass
 import com.example.keopi.utils.CoffeeStorage
@@ -35,9 +37,18 @@ class SeeRegister : AppCompatActivity() {
     lateinit var price: TextView
 
     lateinit var button: Button
+    lateinit var btn_back: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (CoffeeStorage.coffeeList.isEmpty()) {
+            Toast.makeText(this, "No hay nada registrado", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RegistersList::class.java))
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_see_card)
 
@@ -55,6 +66,10 @@ class SeeRegister : AppCompatActivity() {
 
         button.setOnClickListener {
             call()
+        }
+        btn_back.setOnClickListener {
+            startActivity(Intent(this, RegistersList::class.java))
+            this.finish()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -76,6 +91,7 @@ class SeeRegister : AppCompatActivity() {
         weight = findViewById(R.id.txtWeight)
         price = findViewById(R.id.txtPrice)
         button = findViewById(R.id.button)
+        btn_back = findViewById(R.id.back)
     }
 
     fun setTexts(){
