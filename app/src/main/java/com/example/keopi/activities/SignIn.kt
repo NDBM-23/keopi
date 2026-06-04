@@ -30,7 +30,7 @@ class SignIn : AppCompatActivity() {
             val intent = if (rol == "Administrador") {
                 Intent(this, MainActivity::class.java)
             } else {
-                Intent(this, SeeRegister::class.java)
+                Intent(this, RegistersList::class.java)
             }
             startActivity(intent)
             this.finish()

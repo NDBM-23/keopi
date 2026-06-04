@@ -59,10 +59,16 @@ class SeeRegister : AppCompatActivity() {
 
         val pos: Int = intent.getIntExtra("index", -1)
 
-        val i = CoffeeStorage.coffeeList[pos]
-        item = i
+        if (pos != -1 && pos < CoffeeStorage.coffeeList.size) {
+            val i = CoffeeStorage.coffeeList[pos]
+            item = i
 
-        setTexts()
+            setTexts()
+        } else {
+            Toast.makeText(this, "Elija Cafe Valido", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RegistersList::class.java))
+            finish()
+        }
 
         button.setOnClickListener {
             call()
